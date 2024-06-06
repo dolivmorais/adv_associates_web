@@ -1,0 +1,59 @@
+# Arquivos/diretórios de ambientes virtuais
+.venv
+venv/
+.env/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Arquivos de pacotes distribuídos
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Arquivos de IDEs e editores
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de logs
+*.log
+
+# Arquivos de banco de dados SQLite
+*.sqlite3
+
+# Arquivos de testes
+.coverage
+.tox/
+.nox/
+
+# Arquivos de configuração do sistema
+*.cfg
+*.ini
+*.m4
+*.cmake
+*.json
+*.yml
+*.yaml
+
+# Arquivos temporários
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+
+# Arquivos de documentação
+*.html
+*.md
+
+# Arquivos de containers
+*.dockerfile
+*.dockerignore
+docker-compose.yml
+docker-compose.override.yml
