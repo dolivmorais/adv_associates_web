@@ -63,9 +63,76 @@ layout = dbc.Modal([
                         dbc.RadioItems(id='instancia',
                             options=[{'label': '1A Instância', 'value': 1},
                             {'label': '2A Instância', 'value': 2},])
-                    ], sm=12, md=3)
+                    ])
                 ]),
-            ])
+                html.Hr(),
+                dbc.Row([
+                    dbc.Col([
+                        dbc.Row([
+                            dbc.Col([
+                                dbc.Label("Data de Inicial - Data Final"),
+                                ],style=col_centered_style),
+                            dbc.Col([
+                                dcc.DatePickerSingle(
+                                    id='data_inicial',
+                                    className='dbc',
+                                    min_date_allowed=date(1999,12,31),
+                                    max_date_allowed=date(2030,12,31),
+                                    initial_visible_month=date.today(),
+                                    date=date.today()
+                                ),
+                                dcc.DatePickerSingle(
+                                    id='data_final',
+                                    className='dbc',
+                                    min_date_allowed=date(1999,12,31),
+                                    max_date_allowed=date(2030,12,31),
+                                    initial_visible_month=date.today(),
+                                    date=None                                    
+                                ),
+                            ], style=col_centered_style),
+                        ]),
+                        dbc.Switch(id='processo_concluido', label="Processo Concluido", value=False),
+                        dbc.Switch(id='processo_vencido', label="Processo Vencido", value=False),
+                        html.P("O filtro de data final só será computado se o check estiver marcado.", className='dbc', style={'text-align': 'center'}),
+                    ], sm=12, md=5),
+                    dbc.Col([
+                        dbc.Row([
+                            dbc.Col([
+                                dbc.Label("Selecione o Advgado responsável: "),
+                                dcc.Dropdown(id='advogados_envolvidos',
+                                             options=[{'label': i, 'value': i} for i in df_adv['Advogado']],
+                                             className='dbc',
+                                             )
+                            ])
+                        ]),
+                        dbc.Row([
+                            dbc.Col([
+                                dbc.Input(id='input_cliente', placeholder="Nome completo do cliente...", type="text")
+                            ])
+                        ],style={'margin-top': '15px','padding': '15px'}),
+                        dbc.Row([
+                            dbc.Col([
+                                dbc.Input(id='input_cliente_cpf', placeholder="CPF do cliente (apenas números)...", type="number")
+                            ])
+                        ], style={'padding': '15px'}),
+
+                    ], sm=12, md=7)
+                ]),
+                dbc.Row([
+                    dbc.Col([
+                        dcc.Dropdown(id='input_local_arquivo', clearable=False, className='dbc',placeholder="Selecione o local do arquivo..."
+                                     ,options=['Armario Principal', 'Armário Auxiliar', 'Outro']),
+                    ],sm=12, md=5,style={'padding': '15px'}),
+                    dbc.Col([
+                        dbc.Input(id='input_no_processo', placeholder="Número do Processo...", type="number", disabled=False)
+                    ],sm=12, md=5,style={'padding': '15px'}),
+                ],style={'margin-top': '15px'}),
+                html.H5(id='div_erro')     
+            ]),
+            dbc.ModalFooter([
+                dbc.Button("Cancelar", id="cancel_button_novo_processo",color="danger"),
+                dbc.Button("Salvar", id="save_button_novo_processo", color="success"),
+            ]),
 
     ], id='modal_processo', size='lg', is_open=True)
 
@@ -79,3 +146,10 @@ layout = dbc.Modal([
 
 
 # Callback pra atualizar o dropdown de advogados
+@app.callback(
+    Output('advogados_envolvidos', 'options'),
+    Input('store_adv', 'data'))
+def atu(data):
+    df = pd.DataFrame(data)
+    return [{'label': i, 'value': i} for i in df['Advogado']]
+
