@@ -55,19 +55,19 @@ def novo_adv(n, dataset, nome, oab, cpf):
 
     if n:
         if None in [nome, oab, cpf]:
-            return dataset, ["Todos dados são obrigatórios para registro!"], {'margin-top': '15px','color': 'red', 'text-shadow': '2px 2px 8px #000000'}
+            return dataset, ["Todos dados são obrigatórios para registro!"], {'margin-top': '15px','color': 'red'}
 
         df_adv = pd.DataFrame(dataset)
         
         if oab in df_adv['OAB'].values:
-            return dataset, ["Advogado (a) ja existe!"], {'margin-top': '15px','color': 'red', 'text-shadow': '2px 2px 8px #000000'}
+            return dataset, ["Advogado (a) ja existe!"], {'margin-top': '15px','color': 'red'}
         elif cpf in df_adv['CPF'].values:
-            return dataset, ["Advogado (a) ja existe!"], {'margin-top': '15px','color': 'red', 'text-shadow': '2px 2px 8px #000000'}
+            return dataset, ["Advogado (a) ja existe!"], {'margin-top': '15px','color': 'red'}
         elif nome in df_adv['Advogado'].values:
-            return dataset, [f"Advogado (a) {nome} ja existe!"], {'margin-top': '15px','color': 'red', 'text-shadow': '2px 2px 8px #000000'}
+            return dataset, [f"Advogado (a) {nome} ja existe!"], {'margin-top': '15px','color': 'red'}
 
         df_adv.loc[df_adv.shape[0]] = [nome, oab, cpf]
         dataset = df_adv.to_dict()
 
-        return dataset, ["Cadastro realizado com sucesso!"], {'margin-top': '15px','color': 'green', 'text-shadow': '2px 2px 8px #000000'} 
+        return dataset, ["Cadastro realizado com sucesso!"], {'margin-top': '15px','color': 'green'} 
     return dataset, erro, style
